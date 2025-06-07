@@ -4,23 +4,42 @@
   <h3>All Listings</h3>
   <div class="row">
     <% for (let listing of allListings) { %>
-    <a href="/listings/<%= listing._id %>">
-      <div class="card">
-        <div class="card-image">
-          <img src="<%= listing.image %>" alt="listed image" />
+    <div class="card">
+      <div class="card-image">
+        <img src="<%= listing.image %>" alt="listed image" />
+        <div class="price-tag">
+          ₹ <%= listing.price.toLocaleString("en-IN") %> | night
         </div>
-        <div class="card-content">
-          <div class="card-content-address">
+        <a href="/listings/<%= listing._id %>" class="hover-button">
+          <h4>
+            Explore Property &nbsp;<i class="fa-solid fa-arrow-right"></i>
+          </h4>
+        </a>
+      </div>
+      <div class="card-content">
+        <div class="card-details">
+          <h1 class="card-title"><%= listing.title %></h1>
+          <div class="card-address">
             <h4><%= listing.location %></h4>
             ,&nbsp;
             <h4><%= listing.country %></h4>
           </div>
-          <p><%= listing.title %></p>
-          <!-- <p><%= listing.description %></p> -->
-          <h5>&#8377; <%= listing.price.toLocaleString("en-IN") %> / night</h5>
+        </div>
+        <div class="card-footer">
+          <div class="card-footer-left">
+            <i class="fa-solid fa-bed"></i> 2 guests
+          </div>
+          <h4>|</h4>
+          <div class="card-footer-right">
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+          </div>
         </div>
       </div>
-    </a>
+    </div>
     <% } %>
   </div>
 </body>

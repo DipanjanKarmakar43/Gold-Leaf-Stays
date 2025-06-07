@@ -2,41 +2,44 @@
 
 <body>
   <div class="listing-container">
-    <div class="listing-container-left">
-      <div class="listing-image">
-        <div class="listing-overlay top-overlay">
-          <h1 class="listing-title">
-            Property Detail&nbsp;&nbsp;<i class="fa-solid fa-house"></i>
-          </h1>
-        </div>
+    <div class="listing-heading">
+      <h4><strong>HOME</strong> / ROOM DETAILS</h4>
+    </div>
+    <div class="listing-head">
+      <div class="listing-head-img">
         <img
           src="<%= listing.image %>"
           alt="Listing Image"
           class="listing-img"
         />
-        <div class="listing-overlay bottom-overlay">
-          <h1 class="listing-title"><%= listing.title %></h1>
-        </div>
+      </div>
+      <div class="listing-head-short">
+        <h2 class="listing-location">
+          <i class="fa-solid fa-compass"></i>&nbsp;&nbsp; <%= listing.location
+          %>
+        </h2>
+        <h2 class="listing-country">
+          <i class="fa-solid fa-earth-asia"></i>&nbsp;&nbsp; <%= listing.country
+          %>
+        </h2>
+        <h2 class="listing-price">
+          <i class="fa-solid fa-wallet"></i>&nbsp;&#8377;&nbsp; <%=
+          listing.price.toLocaleString("en-IN") %> | night
+        </h2>
       </div>
     </div>
-    <div class="listing-container-right">
-      <div class="listing-container-top">
-        <h1 class="listing-price">
-          <i class="fa-solid fa-wallet"></i>
-          &#8377; <%= listing.price.toLocaleString("en-IN") %> / night
-        </h1>
-        <h2 class="listing-location">
-          <i class="fa-solid fa-map-location"></i>
-          <%= listing.location %>, <%= listing.country %>
-        </h2>
+    <div class="listing-main">
+      <div class="listing-detail">
+        <h1 class="listing-title"><%= listing.title %></h1>
         <p class="listing-description"><%= listing.description %></p>
       </div>
-      <div class="listing-container-bottom">
+      <div class="listing-control">
         <a href="/listings/<%= listing._id %>/edit" class="btn-edit"
           >Edit This Listing &nbsp;&nbsp;<i
             class="fa-solid fa-pen-to-square"
           ></i
         ></a>
+
         <form
           method="POST"
           action="/listings/<%= listing._id %>?_method=DELETE"
@@ -47,6 +50,88 @@
           </button>
         </form>
       </div>
+    </div>
+  </div>
+  <div class="listing-review">
+    <div class="review-showcase">
+      <h4>All Reviews</h4>
+      <div class="review-container">
+        <% if (listing.reviews.length === 0) { %>
+        <p>No reviews yet. Be the first to leave a review!</p>
+        <% } %> <% if (listing.reviews.length > 0) { %>
+        <!-- <p>Reviews for this listing:</p> -->
+        <% } %> <% for (let review of listing.reviews) { %>
+        <div class="review">
+          <div class="review-card">
+            <p><strong>Reviewer:</strong> John Doe</p>
+            <p>
+              <strong>Rating:</strong>
+              <% for (let i = 1; i <= 5; i++) { %> <% if (i <= review.rating) {
+              %>
+              <span class="star filled">&#9733;</span>
+              <!-- filled star -->
+              <% } else { %>
+              <span class="star empty">&#9734;</span>
+              <!-- empty star -->
+              <% } %> <% } %>
+            </p>
+
+            <p><strong>Comment:</strong> <%= review.comment %></p>
+            <form
+              action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE"
+              method="POST"
+              class="delete-review-form"
+            >
+              <button class="btn-delete-review">
+                Delete Review <i class="fa-solid fa-trash"></i>
+              </button>
+            </form>
+          </div>
+        </div>
+        <% } %>
+      </div>
+    </div>
+    <div class="review-form">
+      <h4>Leave a review</h4>
+      <form action="/listings/<%= listing._id %>/reviews" method="POST">
+        <label for="rating">Rating</label>
+        <div class="rating">
+          <input type="radio" id="star5" name="review[rating]" value="5" />
+          <label for="star5" class="star" title="5 stars"></label>
+
+          <input type="radio" id="star4" name="review[rating]" value="4" />
+          <label for="star4" class="star" title="4 stars"></label>
+
+          <input type="radio" id="star3" name="review[rating]" value="3" />
+          <label for="star3" class="star" title="3 stars"></label>
+
+          <input type="radio" id="star2" name="review[rating]" value="2" />
+          <label for="star2" class="star" title="2 stars"></label>
+
+          <input
+            type="radio"
+            id="star1"
+            name="review[rating]"
+            value="1"
+            checked
+          />
+          <label for="star1" class="star" title="1 star"></label>
+        </div>
+
+        <div>
+          <label for="comment">Comment</label>
+          <textarea
+            name="review[comment]"
+            id="comment"
+            cols="30"
+            rows="5"
+            required
+            placeholder="Write your review here..."
+            oninvalid="this.setCustomValidity('Please enter a comment!')"
+          ></textarea>
+        </div>
+        <button>Submit</button>
+      </form>
     </div>
   </div>
 </body>
