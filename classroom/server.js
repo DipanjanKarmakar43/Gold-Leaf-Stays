@@ -2,8 +2,15 @@ const express = require("express");
 const app = express();
 const users = require("./routes/user");
 const posts = require("./routes/post");
+const cookieParser = require("cookie-parser");
+
+app.get("/get-cookies", (req, res) => {
+  res.cookie("greet", "Hello, World!");
+  res.send("Cookie has been set!");
+});
 
 app.get("/", (req, res) => {
+  console.dir(req.cookies);
   res.send("Welcome to the Classroom Server!");
 });
 

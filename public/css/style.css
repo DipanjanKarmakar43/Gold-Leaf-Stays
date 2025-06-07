@@ -35,7 +35,7 @@ body {
   background-color: var(--primary);
   border-bottom: 1px solid var(--tertiary);
 }
-.nav-logo a{
+.nav-logo a {
   height: 8vh;
   display: flex;
   flex-direction: row;
