@@ -154,6 +154,39 @@ body {
 }
 /* End of Navbar */
 
+.flash-success {
+  position: fixed;
+  top: 8.6vh;
+  left: 50%;
+  transform: translateX(-50%);
+  width: fit-content;
+  padding: 1vh 2vh;
+  background-color: var(--accent);
+  color: var(--text);
+  font-size: 1.5vh;
+  font-weight: bold;
+  border-radius: 5px;
+  z-index: 1000;
+  transition: opacity 0.3s ease-in-out, top 0.3s ease-in-out;
+}
+
+.flash-error {
+  position: fixed;
+  top: 8.6vh;
+  left: 50%;
+  transform: translateX(-50%);
+  width: fit-content;
+  padding: 1vh 2vh;
+  background-color: var(--accent);
+  color: var(--text);
+  font-size: 1.5vh;
+  font-weight: bold;
+  border-radius: 5px;
+  z-index: 1000;
+  transition: opacity 0.3s ease-in-out, top 0.3s ease-in-out;
+}
+
+
 /* Card */
 
 .row {
@@ -483,7 +516,7 @@ body {
   background-color: var(--base);
   font-size: 15px;
   font-weight: 500;
-  color: var(--primary);
+  color: var(--text);
   resize: none;
 }
 
