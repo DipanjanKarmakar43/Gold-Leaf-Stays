@@ -4,6 +4,7 @@ const wrapAsync = require("../utils/wrapAsync");
 const ExpressError = require("../utils/ExpressError");
 const Listing = require("../models/listing");
 const { listingSchema } = require("../schema.js");
+const { isLoggedIn } = require("../middleware.js");
 
 // Middleware to validate listing data
 
@@ -27,7 +28,7 @@ router.get(
 );
 
 //New Route
-router.get("/new", (req, res) => {
+router.get("/new", isLoggedIn, (req, res) => {
   res.render("./listings/new.ejs");
 });
 
@@ -36,11 +37,17 @@ router.get(
   "/:id",
   wrapAsync(async (req, res) => {
     let { id } = req.params;
-    const listing = await Listing.findById(id).populate("reviews");
+    const listing = await Listing.findById(id)
+      .populate("reviews")
+      .populate("owner");
     if (!listing) {
-      req.flash("error", "Propert you requested does not exist or has been deleted!");
+      req.flash(
+        "error",
+        "Propert you requested does not exist or has been deleted!"
+      );
       res.redirect("/listings");
     }
+    console.log(listing);
     res.render("./listings/show.ejs", { listing });
   })
 );
@@ -48,9 +55,11 @@ router.get(
 //Create Route
 router.post(
   "/",
+  isLoggedIn,
   validateListing,
   wrapAsync(async (req, res, next) => {
     const newListing = new Listing(req.body.listing);
+    newListing.owner = req.user._id;
     await newListing.save();
     req.flash("success", "Successfully added a new property!");
     res.redirect("/listings");
@@ -60,11 +69,15 @@ router.post(
 //Edit Route
 router.get(
   "/:id/edit",
+  isLoggedIn,
   wrapAsync(async (req, res) => {
     let { id } = req.params;
     const listing = await Listing.findById(id);
     if (!listing) {
-      req.flash("error", "Propert you requested to modify does not exist or has been deleted!");
+      req.flash(
+        "error",
+        "Propert you requested to modify does not exist or has been deleted!"
+      );
       res.redirect("/listings");
     }
     res.render("./listings/edit.ejs", { listing });
@@ -74,9 +87,15 @@ router.get(
 //Update Route
 router.put(
   "/:id",
+  isLoggedIn,
   validateListing,
   wrapAsync(async (req, res) => {
     let { id } = req.params;
+    let listing = await Listing.findById(id);
+    if (!listing.owner._id.equals(res.locals.currentUser._id)) {
+      req.flash("error", "You do not have permission to edit this property!");
+      return res.redirect(`/listings/${id}`);
+    }
     await Listing.findByIdAndUpdate(id, { ...req.body.listing });
     req.flash("success", "Successfully updated the property!");
     res.redirect(`/listings/${id}`);
@@ -86,6 +105,7 @@ router.put(
 //Delete Route
 router.delete(
   "/:id",
+  isLoggedIn,
   wrapAsync(async (req, res) => {
     let { id } = req.params;
     let deleteListing = await Listing.findByIdAndDelete(id);

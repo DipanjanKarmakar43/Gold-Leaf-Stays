@@ -1,0 +1,85 @@
+<% layout("/layouts/boilerplate") %>
+
+<body>
+  <div class="auth-form">
+    <div class="auth-form-header">
+      <i class="fa-solid fa-user"></i>
+      <h1>Create Account</h1>
+      <div class="auth-form-footer">
+        <p>Already have an account ? <a href="/login">Login</a></p>
+      </div>
+    </div>
+
+    <div class="auth-form-body">
+      <form class="auth-form-container" method="POST" action="/signup">
+        <div class="auth-form-top">
+          <div class="auth-input-group">
+            <label class="auth-label" for="username">Username</label>
+            <input
+              class="auth-input"
+              name="username"
+              placeholder="Enter Username"
+              type="text"
+              id="username"
+              required
+              oninvalid="this.setCustomValidity('Please enter a correct username!')"
+              oninput="this.setCustomValidity('')"
+            />
+          </div>
+
+          <div class="auth-input-group">
+            <label class="auth-label" for="email">Email Id</label>
+            <input
+              class="auth-input"
+              name="email"
+              placeholder="Enter Email"
+              type="email"
+              id="email"
+              required
+              oninvalid="this.setCustomValidity('Please enter a correct email id!')"
+              oninput="this.setCustomValidity('')"
+            />
+          </div>
+
+          <div class="auth-input-group">
+            <label class="auth-label" for="password">Password</label>
+            <div class="password-wrapper">
+              <input
+                class="auth-input"
+                name="password"
+                placeholder="Enter Password"
+                type="password"
+                id="password"
+                required
+                oninvalid="this.setCustomValidity('Please enter a correct password!')"
+                oninput="this.setCustomValidity('')"
+              />
+              <i
+                class="fa-solid fa-eye toggle-password"
+                id="togglePassword"
+              ></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="auth-form-bottom">
+          <button class="auth-button" type="submit">
+            Register &nbsp;&nbsp;<i class="fa-solid fa-user-plus"></i>
+          </button>
+        </div>
+      </form>
+      
+    </div>
+  </div>
+  <script>
+    const togglePassword = document.getElementById("togglePassword");
+    const passwordInput = document.getElementById("password");
+
+    togglePassword.addEventListener("click", () => {
+      const isPassword = passwordInput.type === "password";
+      passwordInput.type = isPassword ? "text" : "password";
+      togglePassword.classList.toggle("fa-eye");
+      togglePassword.classList.toggle("fa-eye-slash");
+    });
+  </script>
+</body>

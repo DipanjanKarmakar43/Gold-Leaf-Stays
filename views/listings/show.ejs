@@ -15,16 +15,20 @@
       </div>
       <div class="listing-head-short">
         <h2 class="listing-location">
-          <i class="fa-solid fa-compass"></i>&nbsp;&nbsp; <%= listing.location
-          %>
+          City : <%= listing.location %><i class="fa-solid fa-compass"></i>
         </h2>
         <h2 class="listing-country">
-          <i class="fa-solid fa-earth-asia"></i>&nbsp;&nbsp; <%= listing.country
-          %>
+          Country : <%= listing.country %><i class="fa-solid fa-earth-asia"></i>
         </h2>
         <h2 class="listing-price">
-          <i class="fa-solid fa-wallet"></i>&nbsp;&#8377;&nbsp; <%=
-          listing.price.toLocaleString("en-IN") %> | night
+          &#8377;&nbsp;<%= listing.price.toLocaleString("en-IN") %> | night<i
+            class="fa-solid fa-wallet"
+          ></i>
+        </h2>
+        <h2 class="listing-owner">
+          Owned by : <%= listing.owner.username %><i
+            class="fa-solid fa-user"
+          ></i>
         </h2>
       </div>
     </div>
@@ -33,12 +37,13 @@
         <h1 class="listing-title"><%= listing.title %></h1>
         <p class="listing-description"><%= listing.description %></p>
       </div>
+      <!-- <% if (currentUser && currentUser._id.equals(listing.owner._id)) { %> -->
       <div class="listing-control">
-        <a href="/listings/<%= listing._id %>/edit" class="btn-edit"
-          >Edit This Listing &nbsp;&nbsp;<i
+        <a href="/listings/<%= listing._id %>/edit" class="btn-edit">
+          Edit This Listing &nbsp;&nbsp;<i
             class="fa-solid fa-pen-to-square"
-          ></i
-        ></a>
+          ></i>
+        </a>
 
         <form
           method="POST"
@@ -50,6 +55,7 @@
           </button>
         </form>
       </div>
+      <!-- <% } %> -->
     </div>
   </div>
   <div class="listing-review">

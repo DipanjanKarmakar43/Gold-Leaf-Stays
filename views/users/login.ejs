@@ -1,0 +1,72 @@
+<% layout("/layouts/boilerplate") %>
+
+<body>
+  <div class="auth-form">
+    <div class="auth-form-header">
+      <i class="fa-solid fa-right-to-bracket"></i>
+      <h1>Login to Account</h1>
+      <div class="auth-form-footer">
+        <p>Don't have an account ? <a href="/signup">Sign Up</a></p>
+      </div>
+    </div>
+
+    <div class="auth-form-body">
+      <form class="auth-form-container" method="POST" action="/login">
+        <div class="auth-form-top">
+          <div class="auth-input-group">
+            <label class="auth-label" for="username">Username</label>
+            <input
+              class="auth-input"
+              name="username"
+              placeholder="Enter Username"
+              type="text"
+              id="username"
+              required
+              oninvalid="this.setCustomValidity('Please enter your username!')"
+              oninput="this.setCustomValidity('')"
+            />
+          </div>
+
+          <div class="auth-input-group">
+            <label class="auth-label" for="password">Password</label>
+            <div class="password-wrapper">
+              <input
+                class="auth-input"
+                name="password"
+                placeholder="Enter Password"
+                type="password"
+                id="password"
+                required
+                oninvalid="this.setCustomValidity('Please enter your password!')"
+                oninput="this.setCustomValidity('')"
+              />
+              <i
+                class="fa-solid fa-eye toggle-password"
+                id="togglePassword"
+              ></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="auth-form-bottom">
+          <button class="auth-button" type="submit">
+            Login &nbsp;&nbsp;<i class="fa-solid fa-right-to-bracket"></i>
+          </button>
+        </div>
+      </form>
+      
+    </div>
+  </div>
+
+  <script>
+    const togglePassword = document.getElementById("togglePassword");
+    const passwordInput = document.getElementById("password");
+
+    togglePassword.addEventListener("click", () => {
+      const isPassword = passwordInput.type === "password";
+      passwordInput.type = isPassword ? "text" : "password";
+      togglePassword.classList.toggle("fa-eye");
+      togglePassword.classList.toggle("fa-eye-slash");
+    });
+  </script>
+</body>

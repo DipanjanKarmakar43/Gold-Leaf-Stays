@@ -113,10 +113,10 @@ body {
 }
 .create-new:hover {
   background-color: var(--main);
-  color: var(--accent);
+  color: var(--accent-hover);
 }
 
-.login {
+.logout {
   height: 7.9vh;
   width: fit-content;
   padding: 0vh 3vh;
@@ -130,9 +130,9 @@ body {
   font-weight: 800;
 }
 
-.login:hover {
+.logout:hover {
   background-color: var(--accent-hover);
-  color: var(--main);
+  color: var(--text);
 }
 
 .register {
@@ -185,7 +185,6 @@ body {
   z-index: 1000;
   transition: opacity 0.3s ease-in-out, top 0.3s ease-in-out;
 }
-
 
 /* Card */
 
@@ -598,9 +597,9 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
   padding: 5vh;
-  gap: 5vh;
+  gap: 4vh;
   background-color: var(--secondary);
 }
 
@@ -621,6 +620,22 @@ body {
   color: var(--accent);
 }
 
+.listing-owner {
+  padding: 2vh;
+  width: 100%;
+  font-size: 2vh;
+  font-weight: 600;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--primary);
+  color: var(--text);
+}
+
+.listing-owner i {
+  color: var(--accent);
+}
 .listing-location {
   padding: 2vh;
   width: 100%;
@@ -667,10 +682,8 @@ body {
   width: 75%;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
 }
 .listing-title {
-  padding: 2vh 2vh 1vh 0vh;
   font-size: 5vh;
   font-weight: 700;
   color: var(--text);
@@ -958,3 +971,150 @@ button:hover {
   gap: 10px;
 }
 /* Custom Alert End */
+
+/* signin signup form start*/
+
+.auth-form {
+  height: 84vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0vh 10vh;
+}
+
+.auth-form-header,
+.auth-form-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.auth-form-header {
+  width: 40%;
+  align-items: center;
+  text-align: center;
+}
+
+.auth-form-body {
+  width: 60%;
+  padding: 4vh;
+}
+
+.auth-form-container {
+  width: 100%;
+  padding: 4vh;
+  border: 0.3vh solid var(--tertiary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* === Form Top Section === */
+.auth-form-top {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 2vh;
+  padding: 2vh;
+}
+
+/* === Input Fields === */
+.auth-input-group {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.auth-label {
+  margin-bottom: 1vh;
+  font-size: 2.2vh;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.auth-input {
+  height: 7vh;
+  width: 100%;
+  padding: 1.5vh;
+  border: 0.3vh solid var(--tertiary);
+  background-color: var(--base);
+  font-size: 1.8vh;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.auth-input::placeholder {
+  color: var(--desc);
+  font-weight: 500;
+}
+
+.auth-input:focus {
+  border-color: var(--accent);
+  outline: none;
+}
+.password-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.toggle-password {
+  position: absolute;
+  top: 50%;
+  right: 2vh;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 2.2vh;
+  color: var(--desc);
+}
+
+/* === Button === */
+.auth-form-bottom {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 2vh;
+}
+
+.auth-button {
+  width: 100%;
+  padding: 1.5vh 5vh;
+  border: none;
+  font-size: 2.5vh;
+  font-weight: 600;
+  color: var(--text);
+  background-color: var(--accent);
+  text-align: center;
+}
+
+/* === Header Icons === */
+.auth-form-header i {
+  font-size: 8vh;
+  color: var(--accent);
+  padding: 2vh 0;
+}
+
+.auth-form-header h1 {
+  font-size: 4vh;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.auth-form-footer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 2vh;
+}
+
+.auth-form-footer p {
+  font-size: 2.2vh;
+  color: var(--text);
+}
+.auth-form-footer a {
+  text-decoration: none;
+  color: var(--accent);
+  font-size: 2.2vh;
+  font-weight: 600;
+}
+
+/* signin signup form end*/

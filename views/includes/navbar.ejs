@@ -7,11 +7,14 @@
     <a class="nav-link" href="/">Home</a>
     <a class="nav-explore" href="/listings">All Listings</a>
   </div>
-  
+
   <div class="nav-user">
     <a class="create-new" href="/listings/new">Airbnb your home</a>
-    <!-- <a class="filter" href=""><i class="fa-solid fa-globe"></i></a> -->
-    <a class="login" href="/users/login">Login</a>
-    <a class="register" href="/users/register">Register</a>
+    <% if (!currentUser) { %>
+    <!-- <a class="login" href="/login">Login</a> -->
+    <a class="register" href="/signup">SignUp</a>
+    <% } %> <% if (currentUser) { %>
+    <a class="logout" href="/logout">Logout</a>
+    <% } %>
   </div>
 </nav>
