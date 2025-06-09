@@ -8,7 +8,7 @@
     <div class="listing-head">
       <div class="listing-head-img">
         <img
-          src="<%= listing.image %>"
+          src="<%= listing.image.url %>"
           alt="Listing Image"
           class="listing-img"
         />
@@ -37,7 +37,7 @@
         <h1 class="listing-title"><%= listing.title %></h1>
         <p class="listing-description"><%= listing.description %></p>
       </div>
-      <!-- <% if (currentUser && currentUser._id.equals(listing.owner._id)) { %> -->
+      <% if (currentUser && currentUser._id.equals(listing.owner._id)) { %>
       <div class="listing-control">
         <a href="/listings/<%= listing._id %>/edit" class="btn-edit">
           Edit This Listing &nbsp;&nbsp;<i
@@ -55,7 +55,7 @@
           </button>
         </form>
       </div>
-      <!-- <% } %> -->
+      <% } %>
     </div>
   </div>
   <div class="listing-review">
@@ -64,12 +64,11 @@
       <div class="review-container">
         <% if (listing.reviews.length === 0) { %>
         <p>No reviews yet. Be the first to leave a review!</p>
-        <% } %> <% if (listing.reviews.length > 0) { %>
-        <!-- <p>Reviews for this listing:</p> -->
-        <% } %> <% for (let review of listing.reviews) { %>
+        <% } %> <% if (listing.reviews.length > 0) { %> <% } %> <% for (let
+        review of listing.reviews) { %>
         <div class="review">
           <div class="review-card">
-            <p><strong>Reviewer:</strong> John Doe</p>
+            <p><strong>Reviewer:</strong> @<%= review.author.username %></p>
             <p>
               <strong>Rating:</strong>
               <% for (let i = 1; i <= 5; i++) { %> <% if (i <= review.rating) {
@@ -97,6 +96,8 @@
         <% } %>
       </div>
     </div>
+
+    <% if (currentUser) { %>
     <div class="review-form">
       <h4>Leave a review</h4>
       <form action="/listings/<%= listing._id %>/reviews" method="POST">
@@ -139,5 +140,6 @@
         <button>Submit</button>
       </form>
     </div>
+    <% } %>
   </div>
 </body>

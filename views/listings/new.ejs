@@ -7,7 +7,12 @@
       <h1>Create a New Listing</h1>
     </div>
     <div class="form-body">
-      <form class="form-container" method="POST" action="/listings">
+      <form
+        class="form-container"
+        method="POST"
+        action="/listings"
+        enctype="multipart/form-data"
+      >
         <div class="form-top">
           <div class="form-left">
             <div class="input">
@@ -56,12 +61,14 @@
           </div>
           <div class="form-right">
             <div class="input">
-              <label class="input_label" for="image">Image</label>
+              <label class="input_label" for="image"
+                >Upload Listing Image</label
+              >
               <input
                 class="input_field input__field-image"
                 name="listing[image]"
-                placeholder="Enter Image URL / Link"
-                type="text"
+                type="file"
+                required
               />
             </div>
             <div class="input">

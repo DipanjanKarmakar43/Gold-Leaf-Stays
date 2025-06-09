@@ -24,16 +24,20 @@ const initDB = async () => {
   await Listing.deleteMany({});
   console.log("Cleared all existing listings");
 
-  // Prepare data with owner field
+  // Prepare data with proper 'owner' and full 'image' object
   const listingsWithOwner = initData.data.map((obj) => ({
     ...obj,
-    owner: new mongoose.Types.ObjectId("68466b002dc2f5ada69babda"), // Convert to ObjectId
-    image: obj.image.url, // Adjust to match your schema which expects just a URL string
+    owner: new mongoose.Types.ObjectId("6846ace770a66b33da83d5db"),
+    image: {
+      filename: obj.image.filename,
+      url: obj.image.url,
+    },
   }));
 
   // Insert the new data
   await Listing.insertMany(listingsWithOwner);
   console.log("Data was initialized");
 };
+
 
 initDB();

@@ -11,6 +11,7 @@
         class="form-container"
         method="POST"
         action="/listings/<%= listing._id %>?_method=PUT"
+        enctype="multipart/form-data"
       >
         <div class="form-top">
           <div class="form-left">
@@ -54,13 +55,20 @@
             </div>
           </div>
           <div class="form-right">
+            <label for="">Original Image:</label>
+            <div class="form-image">
+              <img
+                src="<%= originalImageUrl %>"
+                alt="Listing Image"
+                class="listing-img"
+              />
+            </div>
             <div class="input">
-              <label class="input_label" for="image">Image</label>
+              <label class="input_label" for="image">Upload New Image</label>
               <input
                 class="input_field input__field-image"
                 name="listing[image]"
-                value="<%= listing.image %>"
-                type="text"
+                type="file"
               />
             </div>
             <div class="input">

@@ -1,11 +1,16 @@
 <% layout("/layouts/boilerplate") %>
 
 <body>
+  <!-- <div class="filter-contianer">
+    <div class="filter">
+      <i class="fa-solid fa-fire"></i>Trending
+    </div>
+  </div> -->
   <div class="row">
     <% for (let listing of allListings) { %>
     <div class="card">
       <div class="card-image">
-        <img src="<%= listing.image %>" alt="listed image" />
+        <img src="<%= listing.image.url %>" alt="listed image" />
         <div class="price-tag">
           ₹ <%= listing.price.toLocaleString("en-IN") %> | night
         </div>

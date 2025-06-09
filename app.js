@@ -1,3 +1,7 @@
+if (!process.env.NODE_ENV != "production") {
+  require("dotenv").config();
+}
+
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
@@ -6,6 +10,7 @@ const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const ExpressError = require("./utils/ExpressError.js");
 const session = require("express-session");
+const MongoStore = require("connect-mongo");
 const flash = require("connect-flash");
 const passport = require("passport");
 const localStrategy = require("passport-local");
@@ -36,7 +41,20 @@ app.use(methodOverride("_method"));
 app.engine("ejs", ejsMate);
 app.use(express.static(path.join(__dirname, "/public")));
 
+const store = MongoStore.create({
+  mongoUrl: MONGO_URL,
+  crypto: {
+    secret: "mysupersecretcode1234567890!@#$%^&*()",
+  },
+  touchAfter: 24 * 3600, // time period in seconds
+});
+
+store.on("error", function (e) {
+  console.log("Session Store Error", e);
+});
+
 const sessionOptions = {
+  store: store,
   secret: "mysupersecretcode1234567890!@#$%^&*()",
   resave: false,
   saveUninitialized: true,
@@ -47,9 +65,11 @@ const sessionOptions = {
   },
 };
 
-app.get("/", (req, res) => {
-  res.send("Hi there!");
-});
+// app.get("/", (req, res) => {
+//   res.send("Hi there!");
+// });
+
+
 
 app.use(session(sessionOptions));
 app.use(flash());
@@ -66,8 +86,6 @@ app.use((req, res, next) => {
   res.locals.currentUser = req.user;
   next();
 });
-
-
 
 //Listing Routes
 app.use("/listings", listingRouter);

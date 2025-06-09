@@ -406,7 +406,7 @@ body {
 /* New Listing Form  */
 /* === Layout Containers === */
 .form {
-  height: 82vh;
+  height: 82.5vh;
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -455,6 +455,19 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+
+.form-image {
+  width: fit-content;
+  height: 30vh;
+  border-radius: 10px;
+  border: 2px solid var(--tertiary);
+}
+.form-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* border-radius: 10px; */
 }
 
 .form-address {
@@ -531,18 +544,18 @@ body {
 
 /* === Specific Field Heights === */
 .input__field-title {
-  height: 70px;
+  height: fit-content;
 }
 .input__field-description {
-  height: 250px;
+  height: fit-content;
 }
 .input__field-location,
 .input__field-country,
 .input__field-price {
-  height: 50px;
+  height: fit-content;
 }
 .input__field-image {
-  height: 382px;
+  height: fit-content;
 }
 
 /* New Listing Form End */
@@ -766,7 +779,7 @@ body {
   gap: 3vh;
   padding: 3vh; /* uniform spacing around the grid */
   box-sizing: border-box;
-  justify-items: center;
+  justify-items: flex-start;
 }
 
 .review-container p {
