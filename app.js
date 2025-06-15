@@ -19,8 +19,9 @@ const User = require("./models/user.js");
 const listingRouter = require("./routes/listing.js");
 const reviewRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js");
+const e = require("connect-flash");
 
-const MONGO_URL = "mongodb://localhost:27017/airbnb-clone";
+const dbUrl = process.env.ATLASDB_URL;
 
 main()
   .then(() => {
@@ -31,7 +32,7 @@ main()
   });
 
 async function main() {
-  await mongoose.connect(MONGO_URL);
+  await mongoose.connect(dbUrl);
 }
 
 app.set("view engine", "ejs");
@@ -42,20 +43,20 @@ app.engine("ejs", ejsMate);
 app.use(express.static(path.join(__dirname, "/public")));
 
 const store = MongoStore.create({
-  mongoUrl: MONGO_URL,
+  mongoUrl: dbUrl,
   crypto: {
-    secret: "mysupersecretcode1234567890!@#$%^&*()",
+    secret: process.env.SECRET,
   },
   touchAfter: 24 * 3600, // time period in seconds
 });
 
-store.on("error", function (e) {
-  console.log("Session Store Error", e);
+store.on("error", () => {
+  console.log("Error in MongoStore", error);
 });
 
 const sessionOptions = {
   store: store,
-  secret: "mysupersecretcode1234567890!@#$%^&*()",
+  secret: process.env.SECRET,
   resave: false,
   saveUninitialized: true,
   cookie: {
@@ -64,12 +65,6 @@ const sessionOptions = {
     maxAge: 1000 * 60 * 60 * 24 * 7,
   },
 };
-
-// app.get("/", (req, res) => {
-//   res.send("Hi there!");
-// });
-
-
 
 app.use(session(sessionOptions));
 app.use(flash());
