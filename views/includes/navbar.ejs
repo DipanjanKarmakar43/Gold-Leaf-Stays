@@ -12,11 +12,15 @@
 
   <div class="nav-user">
     <a class="create-new" href="/listings/new">Airbnb your home</a>
-    <% if (!currentUser) { %>
-    <!-- <a class="login" href="/login">Login</a> -->
+
+    <% if (locals.currentUser) { %>
+    <!-- Logged in -->
+    <a href="/profile"><%= currentUser.username %></a>
+    <a href="/logout">Logout</a>
+    <% } else { %>
+    <!-- Not logged in -->
     <a class="register" href="/signup">SignUp</a>
-    <% } %> <% if (currentUser) { %>
-    <a class="logout" href="/logout">Logout</a>
+    <a class="login" href="/login">Login</a>
     <% } %>
   </div>
 </nav>
