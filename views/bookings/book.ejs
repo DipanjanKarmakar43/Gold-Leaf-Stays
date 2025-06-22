@@ -1,0 +1,34 @@
+<% layout("/layouts/boilerplate") %>
+<div class="booking-page">
+  <div class="booking-header">
+    <h1>Book Your Stay</h1>
+    <img src="/images/Booking_Form.svg" alt="Booking Illustration">
+    <p>Complete the form to book your stay at <%= listing.title %>.</p>
+  </div>
+
+  <div class="booking-form">
+    <form method="POST" action="/listings/<%= listing._id %>/book">
+      <label for="numPeople">Number of People</label>
+      <input type="number" id="numPeople" name="booking[numPeople]" required min="1" />
+
+      <label for="fromDate">Start Date</label>
+      <input type="date" id="fromDate" name="booking[fromDate]" required />
+
+      <label for="toDate">End Date</label>
+      <input type="date" id="toDate" name="booking[toDate]" required />
+
+      <div class="book-form-row">
+        <label for="food">Food Included?</label>
+        <input type="checkbox" id="food" name="booking[amenities][food]" />
+      </div>
+
+      <label for="paymentOption">Payment Option</label>
+      <select id="paymentOption" name="booking[paymentOption]" required>
+        <option value="prepaid">Prepaid</option>
+        <option value="checkin">Pay on Check-in</option>
+      </select>
+
+      <button type="submit">Confirm Booking</button>
+    </form>
+  </div>
+</div>

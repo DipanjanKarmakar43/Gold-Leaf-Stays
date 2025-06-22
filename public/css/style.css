@@ -135,7 +135,8 @@ body {
   gap: 2vh;
   margin-right: 2vh;
 }
-.create-new {
+.create-new,
+.booking-history {
   height: fit-content;
   width: fit-content;
   padding: 1.5vh 3vh;
@@ -146,10 +147,13 @@ body {
   font-size: 1.5vh;
   font-weight: 600;
   box-shadow: var(--btnshadow);
+  text-decoration: none;
 }
-.create-new:hover {
+.create-new:hover,
+.booking-history:hover {
   box-shadow: var(--bgshadow);
   color: var(--text);
+  text-decoration: none;
 }
 
 .register,
@@ -773,7 +777,7 @@ body {
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
- box-shadow: var(--btnshadow);
+  box-shadow: var(--btnshadow);
   color: var(--text);
 }
 
@@ -808,7 +812,7 @@ body {
 
 .listing-control {
   height: 100%;
-  width: fit-content;
+  width: 40vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -817,6 +821,7 @@ body {
   gap: 5vh;
   box-shadow: var(--bgshadow);
 }
+
 .btn-edit {
   padding: 2vh;
   width: 30vh;
@@ -866,7 +871,196 @@ body {
   color: var(--text);
   border: 1px solid var(--secondary);
 }
+
 /* Show listing detail end */
+
+/* Booking Start */
+.btn-book {
+  padding: 2vh;
+  width: 30vh;
+  text-decoration: none;
+  font-size: 2vh;
+  font-weight: 600;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  text-align: center;
+  box-shadow: var(--btnshadow);
+  color: var(--text);
+  background-color: var(--background);
+  border: none;
+}
+
+.btn-book i {
+  color: var(--accent);
+}
+
+.booking-page {
+  min-height: 82vh;
+  width: 100%;
+  max-width: 100vw;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.booking-header {
+  height: 82vh;
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.booking-header h1 {
+  font-size: 4vh;
+  font-weight: 700;
+  color: var(--accent);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.booking-header p {
+  font-size: 2.5vh;
+  font-weight: 600;
+  color: var(--text);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+.booking-header img {
+  width: fit-content;
+  height: 50vh;
+  object-fit: cover;
+}
+
+.booking-form {
+  height: 82vh;
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4vh;
+  box-shadow: var(--bgshadow);
+}
+
+.booking-form form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 2vh;
+}
+
+.booking-form label {
+  font-size: 2vh;
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.booking-form input[type="number"],
+.booking-form input[type="date"],
+.booking-form select {
+  padding: 1.5vh 3vh;
+  font-size: 1.5vh;
+  border: none;
+  border: 1px solid var(--accent);
+  border-radius: 1vh;
+  background-color: var(--background);
+  box-shadow: var(--bgshadow);
+  transition: border 0.2s ease-in-out;
+  color: var(--text);
+}
+
+.booking-form input[type="checkbox"] {
+  transform: scale(1.2);
+  accent-color: var(--accent);
+}
+
+.booking-form input:focus,
+.booking-form select:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.booking-form button {
+  margin-top: 3vh;
+  padding: 1.5vh 3vh;
+  background-color: var(--accent);
+  color: var(--background);
+  font-size: 1.5vh;
+  border: none;
+  border-radius: 1vh;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  box-shadow: var(--btnshadow);
+  text-transform: uppercase;
+}
+
+.booking-form button:hover {
+  background-color: var(--accent);
+  box-shadow: var(--bgshadow);
+}
+
+.btn-book:hover {
+  box-shadow: var(--bgshadow);
+  color: var(--text);
+  border: 1px solid var(--secondary);
+}
+.book-form-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 2vh;
+}
+.booking-history-container {
+  height: 82vh;
+  width: 100vw;
+  padding: 5vh;
+  background-color: var(--background);
+  overflow-y: auto;
+  box-shadow: var(--bgshadow);
+}
+
+.booking-history-container h1 {
+  text-align: center;
+  color: var(--accent);
+  margin-bottom: 3vh;
+  font-size: 3vh;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.booking-item {
+  width: 100%;
+  background-color: var(--background);
+  border: 1px solid var(--accent);
+  border-radius: 1vh;
+  padding: 1.5vh 3vh;
+  box-shadow: var(--btnshadow);
+  transition: transform 0.2s ease;
+}
+
+.booking-item:hover {
+  transform: scale(1.01);
+}
+
+.booking-item h2 {
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+  font-size: 2.5vh;
+}
+
+.booking-item p {
+  margin: 0.25rem 0;
+  color: var(--text);
+  font-size: 1.8vh;
+}
+
+.booking-item strong {
+  color: var(--primary);
+}
+
+/* Booking End */
 
 /* review start */
 .listing-review {

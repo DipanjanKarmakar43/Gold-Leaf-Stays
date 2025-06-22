@@ -37,14 +37,14 @@
         <h1 class="listing-title"><%= listing.title %></h1>
         <p class="listing-description"><%= listing.description %></p>
       </div>
-      <% if (currentUser && currentUser._id.equals(listing.owner._id)) { %>
+      <% if (currentUser) { %>
       <div class="listing-control">
+        <% if (currentUser._id.equals(listing.owner._id)) { %>
         <a href="/listings/<%= listing._id %>/edit" class="btn-edit">
           Edit This Listing &nbsp;&nbsp;<i
             class="fa-solid fa-pen-to-square"
           ></i>
         </a>
-
         <form
           method="POST"
           action="/listings/<%= listing._id %>?_method=DELETE"
@@ -54,6 +54,11 @@
             Delete This Listing &nbsp;&nbsp;<i class="fa-solid fa-trash"></i>
           </button>
         </form>
+        <% } else { %>
+        <a href="/listings/<%= listing._id %>/book" class="btn-book">
+          Book This Stay &nbsp;&nbsp;<i class="fa-solid fa-calendar-check"></i>
+        </a>
+        <% } %>
       </div>
       <% } %>
     </div>
@@ -137,7 +142,7 @@
             oninvalid="this.setCustomValidity('Please enter a comment!')"
           ></textarea>
         </div>
-        <button class="submit-review" >Submit</button>
+        <button class="submit-review">Submit</button>
       </form>
     </div>
     <% } %>

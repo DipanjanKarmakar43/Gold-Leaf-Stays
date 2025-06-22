@@ -1,0 +1,24 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="booking-history-container">
+  <h1>Your Booking History</h1>
+
+  <% if (bookings.length === 0) { %>
+  <p>You haven’t booked anything yet!</p>
+  <% } %> <% bookings.forEach(booking => { %>
+  <div class="booking-item">
+    <h2><%= booking.listing.title %></h2>
+    <p><strong>Location:</strong> <%= booking.listing.location %></p>
+    <p>
+      <strong>From:</strong> <%= new Date(booking.fromDate).toLocaleDateString()
+      %>
+    </p>
+    <p>
+      <strong>To:</strong> <%= new Date(booking.toDate).toLocaleDateString() %>
+    </p>
+    <p><strong>Guests:</strong> <%= booking.numPeople %></p>
+    <p><strong>Food:</strong> <%= booking.amenities.food ? "Yes" : "No" %></p>
+    <p><strong>Payment:</strong> <%= booking.paymentOption %></p>
+  </div>
+  <% }); %>
+</div>
