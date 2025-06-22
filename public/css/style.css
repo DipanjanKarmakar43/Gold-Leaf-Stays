@@ -1038,6 +1038,7 @@ body {
   padding: 1.5vh 3vh;
   box-shadow: var(--btnshadow);
   transition: transform 0.2s ease;
+  margin-bottom: 5vh;
 }
 
 .booking-item:hover {
