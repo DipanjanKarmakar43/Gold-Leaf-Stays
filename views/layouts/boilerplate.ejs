@@ -31,6 +31,7 @@
 
     <script>
       window.addEventListener("DOMContentLoaded", () => {
+        // Flash message auto-remove
         const flashSuccess = document.querySelector(".flash-success");
         const flashError = document.querySelector(".flash-error");
 
@@ -39,13 +40,39 @@
             setTimeout(() => {
               flash.style.opacity = "0";
               flash.style.transition = "opacity 0.5s ease";
-
-              setTimeout(() => {
-                flash.remove();
-              }, 500); // remove after fade out
-            }, 3000); // display for 3 seconds
+              setTimeout(() => flash.remove(), 500); // Remove after fade
+            }, 3000); // Show for 3s
           }
         });
+
+        // Theme toggle logic
+        const themeToggle = document.getElementById("themeToggle");
+        const themeIcon = document.getElementById("themeIcon");
+
+        function applyTheme(theme) {
+          document.documentElement.setAttribute("data-theme", theme);
+          localStorage.setItem("theme", theme);
+
+          if (theme === "dark") {
+            themeIcon.classList.remove("fa-sun");
+            themeIcon.classList.add("fa-moon");
+          } else {
+            themeIcon.classList.remove("fa-moon");
+            themeIcon.classList.add("fa-sun");
+          }
+        }
+
+        if (themeToggle && themeIcon) {
+          themeToggle.addEventListener("click", () => {
+            const currentTheme =
+              document.documentElement.getAttribute("data-theme");
+            const newTheme = currentTheme === "light" ? "dark" : "light";
+            applyTheme(newTheme);
+          });
+
+          const savedTheme = localStorage.getItem("theme") || "light";
+          applyTheme(savedTheme);
+        }
       });
     </script>
   </body>

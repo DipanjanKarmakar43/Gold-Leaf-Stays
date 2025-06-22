@@ -1,4 +1,4 @@
-if (!process.env.NODE_ENV != "production") {
+if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
 
@@ -76,6 +76,7 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 app.use((req, res, next) => {
+  console.log("Current user:", req.user);
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
   res.locals.currentUser = req.user;
@@ -90,6 +91,10 @@ app.use("/listings/:id/reviews", reviewRouter);
 
 //User Routes
 app.use("/", userRouter);
+
+app.get("/", (req, res) => {
+  res.render("home");
+});
 
 app.all("*", (req, res, next) => {
   next(new ExpressError(404, "Page Not Found!"));

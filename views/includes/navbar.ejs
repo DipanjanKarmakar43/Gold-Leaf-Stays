@@ -1,6 +1,6 @@
 <nav class="navbar">
   <div class="nav-logo">
-    <a href="/listings"
+    <a href="/"
       ><img src="/images/Gold_Leaf_Stays.png" alt="Airbnb"
     /></a>
   </div>
@@ -11,12 +11,14 @@
   </div>
 
   <div class="nav-user">
-    <a class="create-new" href="/listings/new">Airbnb your home</a>
-
-    <% if (locals.currentUser) { %>
+    <!-- Theme toggle -->
+    <button id="themeToggle" class="theme-toggle-btn">
+      <i id="themeIcon" class="fa-solid"></i>
+    </button>
+    <a class="create-new" href="/listings/new">Add your home</a>
+    <% if (currentUser) { %>
     <!-- Logged in -->
-    <a href="/profile"><%= currentUser.username %></a>
-    <a href="/logout">Logout</a>
+    <a class="logout" href="/logout">Logout</a>
     <% } else { %>
     <!-- Not logged in -->
     <a class="register" href="/signup">SignUp</a>

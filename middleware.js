@@ -34,7 +34,7 @@ module.exports.validateListing = (req, res, next) => {
   console.log("🪵 [validateListing] req.body =", req.body); // <- Add this line
   const { error } = listingSchema.validate(req.body.listing); // or req.body
   if (error) {
-    throw new ExpressError(error.details[0].message, 400);
+    throw new ExpressError(400, error.details[0].message);
   } else {
     next();
   }
@@ -43,7 +43,7 @@ module.exports.validateListing = (req, res, next) => {
 module.exports.validateReview = (req, res, next) => {
   let { error } = reviewSchema.validate(req.body);
   if (error) {
-    let errMsg = error.details.map((el) => el.message).join(",");
+    const errMsg = error.details.map((el) => el.message).join(",");
     throw new ExpressError(400, errMsg);
   } else {
     next();
