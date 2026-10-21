@@ -22,12 +22,28 @@ const reviewRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js");
 const bookingRouter = require("./routes/bookings.js");
 
+// Render (and most hosts) run behind a proxy. Needed for secure cookies.
+app.set("trust proxy", 1);
+
 // ========================================
 // ENVIRONMENT VARIABLES
 // ========================================
 
-const dbUrl = process.env.ATLASDB_URL;
-const sessionSecret = process.env.SECRET;
+// trim() removes stray spaces/newlines, replace() removes wrapping quotes
+const dbUrl = (process.env.ATLASDB_URL || "")
+  .trim()
+  .replace(/^["']|["']$/g, "");
+
+const sessionSecret = (process.env.SECRET || "").trim();
+
+// TEMPORARY DEBUG LOG: remove after the deploy works.
+// Prints only the length and first 14 characters, never the password.
+console.log(
+  "DB URL length:",
+  dbUrl.length,
+  "| starts with:",
+  JSON.stringify(dbUrl.slice(0, 14)),
+);
 
 if (!dbUrl || !/^mongodb(\+srv)?:\/\//.test(dbUrl)) {
   throw new Error(
@@ -162,7 +178,7 @@ async function startServer() {
 
     const PORT = process.env.PORT || 8080;
 
-    app.listen(PORT, () => {
+    app.listen(PORT, "0.0.0.0", () => {
       console.log(`Gold-Leaf-Stays server running on port ${PORT}`);
     });
   } catch (err) {
