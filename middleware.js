@@ -23,6 +23,10 @@ module.exports.saveRedirectUrl = (req, res, next) => {
 module.exports.isOwner = async (req, res, next) => {
   let { id } = req.params;
   let listing = await Listing.findById(id);
+  if (!listing) {
+    req.flash("error", "Property not found!");
+    return res.redirect("/listings");
+  }
   if (!listing.owner.equals(res.locals.currentUser._id)) {
     req.flash("error", "You are not the owner of this property!");
     return res.redirect(`/listings/${id}`);
@@ -31,28 +35,31 @@ module.exports.isOwner = async (req, res, next) => {
 };
 
 module.exports.validateListing = (req, res, next) => {
-  console.log("🪵 [validateListing] req.body =", req.body); // <- Add this line
-  const { error } = listingSchema.validate(req.body.listing); // or req.body
+  // Validate the whole body: the schema expects { listing: {...} }
+  const { error } = listingSchema.validate(req.body);
   if (error) {
-    throw new ExpressError(400, error.details[0].message);
-  } else {
-    next();
+    const errMsg = error.details.map((el) => el.message).join(", ");
+    throw new ExpressError(400, errMsg);
   }
+  next();
 };
 
 module.exports.validateReview = (req, res, next) => {
   let { error } = reviewSchema.validate(req.body);
   if (error) {
-    const errMsg = error.details.map((el) => el.message).join(",");
+    const errMsg = error.details.map((el) => el.message).join(", ");
     throw new ExpressError(400, errMsg);
-  } else {
-    next();
   }
+  next();
 };
 
 module.exports.isReviewAuthor = async (req, res, next) => {
   let { id, reviewId } = req.params;
   let review = await Review.findById(reviewId);
+  if (!review) {
+    req.flash("error", "Review not found!");
+    return res.redirect(`/listings/${id}`);
+  }
   if (!review.author.equals(res.locals.currentUser._id)) {
     req.flash("error", "You are not the author of this review!");
     return res.redirect(`/listings/${id}`);
