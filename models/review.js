@@ -11,7 +11,7 @@ const reviewSchema = new Schema({
   },
   createdAt: {
     type: Date,
-    default: Date.now(),
+    default: Date.now, // fixed: no () so it runs per review, not once at startup
   },
   author: {
     type: Schema.Types.ObjectId,

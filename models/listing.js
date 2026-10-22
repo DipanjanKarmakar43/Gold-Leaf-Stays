@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Review = require("./review");
+const { deleteImage } = require("../utils/imageStore");
 const Schema = mongoose.Schema;
 
 const listingSchema = new Schema({
@@ -27,6 +28,7 @@ const listingSchema = new Schema({
   },
 });
 
+// When a listing is deleted, also delete its reviews and its image
 listingSchema.post("findOneAndDelete", async function (listing) {
   if (listing) {
     await Review.deleteMany({
@@ -34,6 +36,7 @@ listingSchema.post("findOneAndDelete", async function (listing) {
         $in: listing.reviews,
       },
     });
+    await deleteImage(listing.image && listing.image.filename);
   }
 });
 

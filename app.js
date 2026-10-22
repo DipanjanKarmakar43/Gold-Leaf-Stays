@@ -21,6 +21,7 @@ const listingRouter = require("./routes/listing.js");
 const reviewRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js");
 const bookingRouter = require("./routes/bookings.js");
+const imageRouter = require("./routes/images.js");
 
 // Render (and most hosts) run behind a proxy. Needed for secure cookies.
 app.set("trust proxy", 1);
@@ -35,15 +36,6 @@ const dbUrl = (process.env.ATLASDB_URL || "")
   .replace(/^["']|["']$/g, "");
 
 const sessionSecret = (process.env.SECRET || "").trim();
-
-// TEMPORARY DEBUG LOG: remove after the deploy works.
-// Prints only the length and first 14 characters, never the password.
-console.log(
-  "DB URL length:",
-  dbUrl.length,
-  "| starts with:",
-  JSON.stringify(dbUrl.slice(0, 14)),
-);
 
 if (!dbUrl || !/^mongodb(\+srv)?:\/\//.test(dbUrl)) {
   throw new Error(
@@ -134,6 +126,7 @@ app.use((req, res, next) => {
 // ROUTES
 // ========================================
 
+app.use("/images", imageRouter);
 app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
 app.use("/", userRouter);
@@ -157,6 +150,12 @@ app.all("*", (req, res, next) => {
 // ========================================
 
 app.use((err, req, res, next) => {
+  // Friendly message when an uploaded image is too big
+  if (err.code === "LIMIT_FILE_SIZE") {
+    err.statusCode = 400;
+    err.message = "Image is too large (max 5 MB)";
+  }
+
   const statusCode = err.statusCode || 500;
 
   if (!err.message) {

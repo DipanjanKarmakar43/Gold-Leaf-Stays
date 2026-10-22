@@ -1,4 +1,5 @@
 const Listing = require("../models/listing");
+const { saveImage, deleteImage } = require("../utils/imageStore");
 
 module.exports.index = async (req, res) => {
   const allListings = await Listing.find({});
@@ -17,21 +18,24 @@ module.exports.show = async (req, res) => {
   if (!listing) {
     req.flash(
       "error",
-      "Propert you requested does not exist or has been deleted!"
+      "Property you requested does not exist or has been deleted!",
     );
-    res.redirect("/listings");
+    return res.redirect("/listings");
   }
-  console.log(listing);
   res.render("./listings/show.ejs", { listing });
 };
 
-module.exports.create = async (req, res, next) => {
-  let url = req.file.path;
-  let filename = req.file.filename;
+module.exports.create = async (req, res) => {
+  if (!req.file) {
+    req.flash("error", "Please upload an image for the property.");
+    return res.redirect("/listings/new");
+  }
+
   const newListing = new Listing(req.body.listing);
   newListing.owner = req.user._id;
-  newListing.image = { url, filename };
+  newListing.image = await saveImage(req.file);
   await newListing.save();
+
   req.flash("success", "Successfully added a new property!");
   res.redirect("/listings");
 };
@@ -42,31 +46,33 @@ module.exports.edit = async (req, res) => {
   if (!listing) {
     req.flash(
       "error",
-      "Propert you requested to modify does not exist or has been deleted!"
+      "Property you requested to modify does not exist or has been deleted!",
     );
-    res.redirect("/listings");
+    return res.redirect("/listings");
   }
-  let originalImageUrl = listing.image.url;
-  originalImageUrl = originalImageUrl.replace("/uploads", "/uploads/h_300,w_250");
+  // No Cloudinary transform any more, just use the stored URL
+  const originalImageUrl = listing.image.url;
   res.render("./listings/edit.ejs", { listing, originalImageUrl });
 };
 
 module.exports.update = async (req, res) => {
   let { id } = req.params;
   let listing = await Listing.findByIdAndUpdate(id, { ...req.body.listing });
-  if (typeof req.file !== "undefined") {
-    let filename = req.file.filename;
-    let url = req.file.path;
-    listing.image = { url, filename };
+
+  if (req.file) {
+    const oldImageId = listing.image && listing.image.filename;
+    listing.image = await saveImage(req.file);
     await listing.save();
+    await deleteImage(oldImageId); // remove the old image from Atlas
   }
+
   req.flash("success", "Successfully updated the property!");
   res.redirect(`/listings/${id}`);
 };
 
 module.exports.delete = async (req, res) => {
   let { id } = req.params;
-  let deleteListing = await Listing.findByIdAndDelete(id);
+  await Listing.findByIdAndDelete(id); // model hook also deletes reviews + image
   req.flash("success", "Successfully deleted the property!");
   res.redirect("/listings");
 };
